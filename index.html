@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Mastery Hub - Interactive Learning Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+           background: linear-gradient(135deg, #000000 0%, #333333 50%, #666666 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 30%;
+            right: 30%;
+            animation-delay: 4s;
+            transform: rotate(45deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .nav-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 20px 60px 20px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            font-size: 1.1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+        }
+
+        .section {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+        .section-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .lesson-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .property-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .property-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color:black;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+        }
+
+        .property-desc {
+            color: rgb(255, 255, 255);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .property-example {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            border: none;
+            border-radius: 6px;
+            padding: 5px 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .property-example:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .demo-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .demo-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .demo-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .demo-control:hover,
+        .demo-control.active {
+            background: var(--primary);
+        }
+
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            min-height: 120px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .flex-item {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 60px;
+        }
+
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: rgba(139, 92, 246, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .color-name {
+            color: white;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .color-value {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .animation-demo {
+            background: rgba(6, 182, 212, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        .animated-box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border-radius: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .quiz-container {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .quiz-question {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: var(--success);
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: var(--danger);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef08a 0%, #facc15 100%);
+            color: #92400e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .demo-controls {
+                flex-direction: column;
+            }
+
+            .grid-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>CSS Mastery Hub</h1>
+                <p class="hero-subtitle">Master modern CSS with interactive lessons, live demos, and hands-on practice. From basics to advanced techniques.<br> Created By Kyaw Myo Naing </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Interactive Lessons</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">CSS Properties</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Live Demos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-container">
+            <div class="nav-grid">
+                <a href="#fundamentals" class="nav-item">
+                    <span class="nav-icon">🎯</span>
+                    Fundamentals
+                </a>
+                <a href="#typography" class="nav-item">
+                    <span class="nav-icon">✍️</span>
+                    Typography
+                </a>
+                <a href="#colors" class="nav-item">
+                    <span class="nav-icon">🎨</span>
+                    Colors & Design
+                </a>
+                <a href="#layout" class="nav-item">
+                    <span class="nav-icon">📐</span>
+                    Layout Systems
+                </a>
+                <a href="#flexbox" class="nav-item">
+                    <span class="nav-icon">🤸</span>
+                    Flexbox
+                </a>
+                <a href="#grid" class="nav-item">
+                    <span class="nav-icon">🔲</span>
+                    CSS Grid
+                </a>
+                <a href="#animations" class="nav-item">
+                    <span class="nav-icon">✨</span>
+                    Animations
+                </a>
+                <a href="#responsive" class="nav-item">
+                    <span class="nav-icon">📱</span>
+                    Responsive
+                </a>
+                <a href="#advanced" class="nav-item">
+                    <span class="nav-icon">🚀</span>
+                    Advanced
+                </a>
+                <a href="#modern" class="nav-item">
+                    <span class="nav-icon">⚡</span>
+                    Modern CSS
+                </a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search lessons, properties, or techniques..." id="searchBox">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <section id="fundamentals" class="section">
+            <div class="section-header">
+                <span class="section-icon">🎯</span>
+                <div>
+                    <h2>CSS Fundamentals</h2>
+                    <p class="section-desc">Master the building blocks of CSS - selectors, specificity, cascade, and inheritance.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="selectors">Selectors</button>
+                <button class="tab-button" data-tab="specificity">Specificity</button>
+                <button class="tab-button" data-tab="cascade">Cascade & Inheritance</button>
+            </div>
+
+            <div class="tab-content active" id="selectors">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Universal Selector</div>
+                        <div class="property-desc">Selects all elements on the page. Use sparingly for performance.</div>
+                        <div class="property-example">
+                            * { margin: 0; padding: 0; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Type Selectors</div>
+                        <div class="property-desc">Target elements by their HTML tag name.</div>
+                        <div class="property-example">
+                            h1 { font-size: 2rem; }
+                            p { line-height: 1.6; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Class Selectors</div>
+                        <div class="property-desc">Most commonly used selector for styling components.</div>
+                        <div class="property-example">
+                            .button { padding: 12px 24px; }
+                            .card { border-radius: 8px; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">ID Selectors</div>
+                        <div class="property-desc">High specificity selector for unique elements.</div>
+                        <div class="property-example">
+                            #header { position: fixed; }
+                            #main-nav { z-index: 100; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Attribute Selectors</div>
+                        <div class="property-desc">Select elements based on their attributes.</div>
+                        <div class="property-example">
+                            input[type="email"] { border: 2px solid blue; }
+                            a[href^="https"] { color: green; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Pseudo-classes</div>
+                        <div class="property-desc">Style elements based on their state or position.</div>
+                        <div class="property-example">
+                            button:hover { background: #007bff; }
+                            li:nth-child(odd) { background: #f9f9f9; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="specificity">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Specificity Hierarchy</div>
+                        <div class="property-desc">Understanding CSS specificity: Inline > IDs > Classes > Elements</div>
+                        <div class="property-example">
+                            /* Specificity: 0,0,0,1 */
+                            p { color: black; }
+                            
+                            /* Specificity: 0,0,1,0 */
+                            .text { color: blue; }
+                            
+                            /* Specificity: 0,1,0,0 */
+                            #main { color: red; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">!important</div>
+                        <div class="property-desc">Override specificity (use sparingly!)</div>
+                        <div class="property-example">
+                            .emergency { 
+                              color: red !important; 
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="cascade">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Inheritance</div>
+                        <div class="property-desc">Some properties inherit from parent elements</div>
+                        <div class="property-example">
+                            body { 
+                              font-family: Arial; /* Inherited by children */
+                              color: #333; /* Inherited by children */
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Custom Properties</div>
+                        <div class="property-desc">CSS variables for maintainable code</div>
+                        <div class="property-example">
+                            :root {
+                              --primary: #007bff;
+                              --spacing: 1rem;
+                            }
+                            .button { background: var(--primary); }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-question">Which selector has the highest specificity?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-answer="wrong">p.text</div>
+                    <div class="quiz-option" data-answer="wrong">.text</div>
+                    <div class="quiz-option" data-answer="correct">#main</div>
+                    <div class="quiz-option" data-answer="wrong">div p</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="typography" class="section">
+            <div class="section-header">
+                <span class="section-icon">✍️</span>
+                <div>
+                    <h2>Typography & Text</h2>
+                    <p class="section-desc">Create beautiful, readable text with advanced typography techniques.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="fonts">Font Properties</button>
+                <button class="tab-button" data-tab="text-styling">Text Styling</button>
+                <button class="tab-button" data-tab="web-fonts">Web Fonts</button>
+            </div>
+
+            <div class="tab-content active" id="fonts">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">font-family</div>
+                        <div class="property-desc">Define font stack with fallbacks</div>
+                        <div class="property-example">
+                            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 
+                                         'Segoe UI', sans-serif;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">font-size</div>
+                        <div class="property-desc">Responsive font sizing with clamp()</div>
+                        <div class="property-example">
+                            font-size: clamp(1rem, 2.5vw, 2rem);
+                            font-size: 1.25rem; /* 20px if root is 16px */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">font-weight</div>
+                        <div class="property-desc">Control font thickness</div>
+                        <div class="property-example">
+                            font-weight: 300; /* Light */
+                            font-weight: 400; /* Normal */
+                            font-weight: 600; /* Semi-bold */
+                            font-weight: 800; /* Extra-bold */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">line-height</div>
+                        <div class="property-desc">Control vertical spacing between lines</div>
+                        <div class="property-example">
+                            line-height: 1.6; /* 160% of font-size */
+                            line-height: 1.5; /* Good for body text */
+                            line-height: 1.2; /* Good for headings */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="text-styling">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">text-align</div>
+                        <div class="property-desc">Horizontal text alignment</div>
+                        <div class="property-example">
+                            text-align: left | center | right | justify;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">text-decoration</div>
+                        <div class="property-desc">Add or remove text decorations</div>
+                        <div class="property-example">
+                            text-decoration: underline wavy red;
+                            text-decoration: line-through;
+                            text-decoration: none; /* Remove underline */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">text-transform</div>
+                        <div class="property-desc">Transform text case</div>
+                        <div class="property-example">
+                            text-transform: uppercase;
+                            text-transform: lowercase;
+                            text-transform: capitalize;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">letter-spacing</div>
+                        <div class="property-desc">Adjust space between characters</div>
+                        <div class="property-example">
+                            letter-spacing: 0.05em; /* Slightly spaced */
+                            letter-spacing: 0.1em; /* More spaced */
+                            letter-spacing: -0.02em; /* Tighter */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="web-fonts">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">@import</div>
+                        <div class="property-desc">Import Google Fonts (slower method)</div>
+                        <div class="property-example">
+                            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">@font-face</div>
+                        <div class="property-desc">Define custom fonts</div>
+                        <div class="property-example">
+                            @font-face {
+                              font-family: 'MyFont';
+                              src: url('font.woff2') format('woff2');
+                              font-display: swap;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="colors" class="section">
+            <div class="section-header">
+                <span class="section-icon">🎨</span>
+                <div>
+                    <h2>Colors & Visual Design</h2>
+                    <p class="section-desc">Master color theory, gradients, shadows, and modern visual effects.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="color-formats">Color Formats</button>
+                <button class="tab-button" data-tab="gradients">Gradients</button>
+                <button class="tab-button" data-tab="shadows">Shadows & Effects</button>
+            </div>
+
+            <div class="tab-content active" id="color-formats">
+                <div class="color-palette">
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #ff6b6b;"></div>
+                        <div class="color-name">Coral Red</div>
+                        <div class="color-value">#ff6b6b</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #4ecdc4;"></div>
+                        <div class="color-name">Turquoise</div>
+                        <div class="color-value">#4ecdc4</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #45b7d1;"></div>
+                        <div class="color-name">Sky Blue</div>
+                        <div class="color-value">#45b7d1</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: #f39c12;"></div>
+                        <div class="color-name">Orange</div>
+                        <div class="color-value">#f39c12</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: rgba(255, 255, 255, 0.8);"></div>
+                        <div class="color-name">Transparent White</div>
+                        <div class="color-value">rgba(255,255,255,0.8)</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-circle" style="background: hsl(280, 100%, 70%);"></div>
+                        <div class="color-name">Purple HSL</div>
+                        <div class="color-value">hsl(280, 100%, 70%)</div>
+                    </div>
+                </div>
+
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">HEX Colors</div>
+                        <div class="property-desc">Most common format, supports transparency with 8 digits</div>
+                        <div class="property-example">
+                            color: #ff6b6b; /* Red Green Blue */
+                            background: #ff6b6b80; /* With 50% opacity */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">RGB & RGBA</div>
+                        <div class="property-desc">Red, Green, Blue with optional Alpha channel</div>
+                        <div class="property-example">
+                            color: rgb(255, 107, 107);
+                            background: rgba(255, 107, 107, 0.5);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">HSL & HSLA</div>
+                        <div class="property-desc">Hue, Saturation, Lightness - more intuitive</div>
+                        <div class="property-example">
+                            color: hsl(0, 100%, 71%); /* Red hue */
+                            background: hsla(0, 100%, 71%, 0.5);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="gradients">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Linear Gradients</div>
+                        <div class="property-desc">Smooth transitions between colors in a straight line</div>
+                        <div class="property-example">
+                            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+                            background: linear-gradient(to right, red, blue);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Radial Gradients</div>
+                        <div class="property-desc">Circular or elliptical gradients</div>
+                        <div class="property-example">
+                            background: radial-gradient(circle, #ff6b6b, #4ecdc4);
+                            background: radial-gradient(ellipse at top, red, blue);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Conic Gradients</div>
+                        <div class="property-desc">Gradients that rotate around a center point</div>
+                        <div class="property-example">
+                            background: conic-gradient(red, yellow, green, blue, red);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="shadows">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">box-shadow</div>
+                        <div class="property-desc">Add depth with shadows</div>
+                        <div class="property-example">
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">text-shadow</div>
+                        <div class="property-desc">Add shadows to text</div>
+                        <div class="property-example">
+                            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+                            text-shadow: 0 0 10px #ff6b6b;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">filter</div>
+                        <div class="property-desc">Apply visual effects like blur, brightness</div>
+                        <div class="property-example">
+                            filter: blur(5px);
+                            filter: brightness(1.2) contrast(1.1);
+                            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="layout" class="section">
+            <div class="section-header">
+                <span class="section-icon">📐</span>
+                <div>
+                    <h2>Layout Systems</h2>
+                    <p class="section-desc">Master positioning, floats, and the CSS box model for precise layouts.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="box-model">Box Model</button>
+                <button class="tab-button" data-tab="positioning">Positioning</button>
+                <button class="tab-button" data-tab="display">Display Types</button>
+            </div>
+
+            <div class="tab-content active" id="box-model">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">box-sizing</div>
+                        <div class="property-desc">Control how width and height are calculated</div>
+                        <div class="property-example">
+                            * { box-sizing: border-box; } /* Recommended */
+                            box-sizing: content-box; /* Default */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">margin</div>
+                        <div class="property-desc">Space outside the element</div>
+                        <div class="property-example">
+                            margin: 20px; /* All sides */
+                            margin: 10px 20px; /* Vertical | Horizontal */
+                            margin: 10px 15px 20px 25px; /* Top Right Bottom Left */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">padding</div>
+                        <div class="property-desc">Space inside the element</div>
+                        <div class="property-example">
+                            padding: 1rem; /* All sides */
+                            padding: 0.5rem 1rem; /* Vertical | Horizontal */
+                            padding-inline: 1rem; /* Logical property */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="positioning">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">position: static</div>
+                        <div class="property-desc">Default positioning - normal document flow</div>
+                        <div class="property-example">
+                            position: static; /* Default value */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">position: relative</div>
+                        <div class="property-desc">Positioned relative to its normal position</div>
+                        <div class="property-example">
+                            position: relative;
+                            top: 10px;
+                            left: 20px;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">position: absolute</div>
+                        <div class="property-desc">Positioned relative to nearest positioned ancestor</div>
+                        <div class="property-example">
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">position: fixed</div>
+                        <div class="property-desc">Positioned relative to the viewport</div>
+                        <div class="property-example">
+                            position: fixed;
+                            top: 20px;
+                            right: 20px;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">position: sticky</div>
+                        <div class="property-desc">Switches between relative and fixed based on scroll</div>
+                        <div class="property-example">
+                            position: sticky;
+                            top: 0; /* Stick when 0px from top */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="display">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">display: block</div>
+                        <div class="property-desc">Full width, stacks vertically</div>
+                        <div class="property-example">
+                            display: block; /* div, p, h1-h6 default */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">display: inline</div>
+                        <div class="property-desc">Only as wide as content, flows horizontally</div>
+                        <div class="property-example">
+                            display: inline; /* span, a, strong default */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">display: inline-block</div>
+                        <div class="property-desc">Flows inline but accepts width/height</div>
+                        <div class="property-example">
+                            display: inline-block; /* Best of both worlds */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">display: none</div>
+                        <div class="property-desc">Completely removes element from layout</div>
+                        <div class="property-example">
+                            display: none; /* vs visibility: hidden */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="flexbox" class="section">
+            <div class="section-header">
+                <span class="section-icon">🤸</span>
+                <div>
+                    <h2>Flexbox Mastery</h2>
+                    <p class="section-desc">Build flexible, responsive layouts with CSS Flexbox - the modern way to align and distribute space.</p>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-title">🎮 Interactive Flexbox Demo</div>
+                <div class="demo-controls">
+                    <button class="demo-control active" data-prop="justify-content" data-value="center">Center</button>
+                    <button class="demo-control" data-prop="justify-content" data-value="space-between">Space Between</button>
+                    <button class="demo-control" data-prop="justify-content" data-value="space-around">Space Around</button>
+                    <button class="demo-control" data-prop="flex-direction" data-value="column">Column</button>
+                    <button class="demo-control" data-prop="flex-direction" data-value="row">Row</button>
+                </div>
+                <div class="flex-demo" id="flexDemo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="flex-container">Container Properties</button>
+                <button class="tab-button" data-tab="flex-items">Item Properties</button>
+                <button class="tab-button" data-tab="flex-patterns">Common Patterns</button>
+            </div>
+
+            <div class="tab-content active" id="flex-container">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">display: flex</div>
+                        <div class="property-desc">Creates a flex container</div>
+                        <div class="property-example">
+                            display: flex; /* or inline-flex */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">flex-direction</div>
+                        <div class="property-desc">Sets the main axis direction</div>
+                        <div class="property-example">
+                            flex-direction: row; /* default */
+                            flex-direction: column;
+                            flex-direction: row-reverse;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">justify-content</div>
+                        <div class="property-desc">Aligns items along main axis</div>
+                        <div class="property-example">
+                            justify-content: center;
+                            justify-content: space-between;
+                            justify-content: space-around;
+                            justify-content: space-evenly;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">align-items</div>
+                        <div class="property-desc">Aligns items along cross axis</div>
+                        <div class="property-example">
+                            align-items: center;
+                            align-items: flex-start;
+                            align-items: flex-end;
+                            align-items: stretch; /* default */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">flex-wrap</div>
+                        <div class="property-desc">Controls whether items wrap</div>
+                        <div class="property-example">
+                            flex-wrap: nowrap; /* default */
+                            flex-wrap: wrap;
+                            flex-wrap: wrap-reverse;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">gap</div>
+                        <div class="property-desc">Space between flex items</div>
+                        <div class="property-example">
+                            gap: 1rem; /* All gaps */
+                            gap: 1rem 2rem; /* Row gap | Column gap */
+                            row-gap: 1rem;
+                            column-gap: 2rem;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="flex-items">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">flex</div>
+                        <div class="property-desc">Shorthand for flex-grow, flex-shrink, flex-basis</div>
+                        <div class="property-example">
+                            flex: 1; /* Grow equally */
+                            flex: 2; /* Grow twice as much */
+                            flex: 0 1 auto; /* Don't grow, can shrink */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">flex-grow</div>
+                        <div class="property-desc">How much an item should grow</div>
+                        <div class="property-example">
+                            flex-grow: 0; /* default - don't grow */
+                            flex-grow: 1; /* grow equally */
+                            flex-grow: 2; /* grow twice as much */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">flex-shrink</div>
+                        <div class="property-desc">How much an item should shrink</div>
+                        <div class="property-example">
+                            flex-shrink: 1; /* default - can shrink */
+                            flex-shrink: 0; /* don't shrink */
+                            flex-shrink: 2; /* shrink twice as much */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">align-self</div>
+                        <div class="property-desc">Override align-items for individual item</div>
+                        <div class="property-example">
+                            align-self: auto; /* inherit from container */
+                            align-self: center;
+                            align-self: flex-end;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="flex-patterns">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Perfect Centering</div>
+                        <div class="property-desc">Center content both horizontally and vertically</div>
+                        <div class="property-example">
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Holy Grail Layout</div>
+                        <div class="property-desc">Header, flexible content, footer</div>
+                        <div class="property-example">
+                            body {
+                              display: flex;
+                              flex-direction: column;
+                              min-height: 100vh;
+                            }
+                            main { flex: 1; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Responsive Cards</div>
+                        <div class="property-desc">Cards that wrap and grow</div>
+                        <div class="property-example">
+                            .container {
+                              display: flex;
+                              flex-wrap: wrap;
+                              gap: 1rem;
+                            }
+                            .card { flex: 1 1 300px; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="grid" class="section">
+            <div class="section-header">
+                <span class="section-icon">🔲</span>
+                <div>
+                    <h2>CSS Grid Layout</h2>
+                    <p class="section-desc">Create complex, two-dimensional layouts with CSS Grid - the most powerful layout system.</p>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-title">🎯 Interactive Grid Demo</div>
+                <div class="demo-controls">
+                    <button class="demo-control active" data-grid="3">3 Columns</button>
+                    <button class="demo-control" data-grid="4">4 Columns</button>
+                    <button class="demo-control" data-grid="auto">Auto Fit</button>
+                </div>
+                <div class="grid-demo" id="gridDemo">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="grid-container">Container Properties</button>
+                <button class="tab-button" data-tab="grid-items">Item Properties</button>
+                <button class="tab-button" data-tab="grid-patterns">Layout Patterns</button>
+            </div>
+
+            <div class="tab-content active" id="grid-container">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">display: grid</div>
+                        <div class="property-desc">Creates a grid container</div>
+                        <div class="property-example">
+                            display: grid; /* or inline-grid */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-template-columns</div>
+                        <div class="property-desc">Defines the columns of the grid</div>
+                        <div class="property-example">
+                            grid-template-columns: 1fr 2fr 1fr;
+                            grid-template-columns: repeat(3, 1fr);
+                            grid-template-columns: 200px auto 100px;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-template-rows</div>
+                        <div class="property-desc">Defines the rows of the grid</div>
+                        <div class="property-example">
+                            grid-template-rows: auto 1fr auto;
+                            grid-template-rows: repeat(3, 100px);
+                            grid-template-rows: minmax(100px, auto);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">gap</div>
+                        <div class="property-desc">Space between grid items</div>
+                        <div class="property-example">
+                            gap: 20px; /* row and column gap */
+                            gap: 20px 30px; /* row-gap column-gap */
+                            row-gap: 20px;
+                            column-gap: 30px;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-auto-flow</div>
+                        <div class="property-desc">Controls how auto-placed items flow</div>
+                        <div class="property-example">
+                            grid-auto-flow: row; /* default */
+                            grid-auto-flow: column;
+                            grid-auto-flow: dense; /* fill gaps */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-template-areas</div>
+                        <div class="property-desc">Define named grid areas</div>
+                        <div class="property-example">
+                            grid-template-areas: 
+                              "header header header"
+                              "sidebar main main"
+                              "footer footer footer";
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="grid-items">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">grid-column</div>
+                        <div class="property-desc">Shorthand for grid-column-start and grid-column-end</div>
+                        <div class="property-example">
+                            grid-column: 1 / 3; /* Start line 1, end line 3 */
+                            grid-column: 1 / span 2; /* Start line 1, span 2 columns */
+                            grid-column: 1 / -1; /* Start line 1, end last line */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-row</div>
+                        <div class="property-desc">Shorthand for grid-row-start and grid-row-end</div>
+                        <div class="property-example">
+                            grid-row: 2 / 4; /* Start row 2, end row 4 */
+                            grid-row: 1 / span 3; /* Start row 1, span 3 rows */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">grid-area</div>
+                        <div class="property-desc">Shorthand for all grid placement properties</div>
+                        <div class="property-example">
+                            grid-area: header; /* Use named area */
+                            grid-area: 1 / 1 / 3 / 3; /* row-start / col-start / row-end / col-end */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">justify-self</div>
+                        <div class="property-desc">Align item horizontally within its cell</div>
+                        <div class="property-example">
+                            justify-self: start | center | end | stretch;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">align-self</div>
+                        <div class="property-desc">Align item vertically within its cell</div>
+                        <div class="property-example">
+                            align-self: start | center | end | stretch;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="grid-patterns">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Responsive Grid</div>
+                        <div class="property-desc">Auto-fit columns with minimum width</div>
+                        <div class="property-example">
+                            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Holy Grail Layout</div>
+                        <div class="property-desc">Classic web layout with CSS Grid</div>
+                        <div class="property-example">
+                            grid-template-areas: 
+                              "header header header"
+                              "sidebar main aside"
+                              "footer footer footer";
+                            grid-template-rows: auto 1fr auto;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Card Layout</div>
+                        <div class="property-desc">Masonry-style card grid</div>
+                        <div class="property-example">
+                            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                            grid-auto-rows: min-content;
+                            gap: 1rem;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="animations" class="section">
+            <div class="section-header">
+                <span class="section-icon">✨</span>
+                <div>
+                    <h2>Animations & Transitions</h2>
+                    <p class="section-desc">Bring your designs to life with smooth transitions and powerful keyframe animations.</p>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-title">🎪 Animation Playground</div>
+                <div class="animation-demo">
+                    <div class="animated-box"></div>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="transitions">Transitions</button>
+                <button class="tab-button" data-tab="keyframes">Keyframes</button>
+                <button class="tab-button" data-tab="transforms">Transforms</button>
+                <button class="tab-button" data-tab="advanced-animations">Advanced</button>
+            </div>
+
+            <div class="tab-content active" id="transitions">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">transition</div>
+                        <div class="property-desc">Shorthand for all transition properties</div>
+                        <div class="property-example">
+                            transition: all 0.3s ease;
+                            transition: opacity 0.5s ease-in-out;
+                            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transition-property</div>
+                        <div class="property-desc">Which properties to animate</div>
+                        <div class="property-example">
+                            transition-property: opacity, transform;
+                            transition-property: all; /* default */
+                            transition-property: none;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transition-duration</div>
+                        <div class="property-desc">How long the transition takes</div>
+                        <div class="property-example">
+                            transition-duration: 0.3s;
+                            transition-duration: 300ms;
+                            transition-duration: 0.3s, 0.5s; /* Multiple values */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transition-timing-function</div>
+                        <div class="property-desc">The speed curve of the transition</div>
+                        <div class="property-example">
+                            transition-timing-function: ease; /* default */
+                            transition-timing-function: ease-in-out;
+                            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="keyframes">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">@keyframes</div>
+                        <div class="property-desc">Define animation steps</div>
+                        <div class="property-example">
+                            @keyframes slideIn {
+                              from { transform: translateX(-100%); }
+                              to { transform: translateX(0); }
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">animation</div>
+                        <div class="property-desc">Shorthand for all animation properties</div>
+                        <div class="property-example">
+                            animation: slideIn 1s ease-in-out;
+                            animation: bounce 2s infinite;
+                            animation: fadeIn 0.5s ease-out forwards;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">animation-iteration-count</div>
+                        <div class="property-desc">How many times to repeat</div>
+                        <div class="property-example">
+                            animation-iteration-count: 1; /* default */
+                            animation-iteration-count: infinite;
+                            animation-iteration-count: 3;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">animation-fill-mode</div>
+                        <div class="property-desc">What happens before/after animation</div>
+                        <div class="property-example">
+                            animation-fill-mode: none; /* default */
+                            animation-fill-mode: forwards; /* Keep end state */
+                            animation-fill-mode: backwards; /* Apply start state */
+                            animation-fill-mode: both;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="transforms">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">transform: translate</div>
+                        <div class="property-desc">Move elements without affecting layout</div>
+                        <div class="property-example">
+                            transform: translateX(50px);
+                            transform: translateY(-20px);
+                            transform: translate(10px, 20px);
+                            transform: translate3d(10px, 20px, 0);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transform: rotate</div>
+                        <div class="property-desc">Rotate elements around their center</div>
+                        <div class="property-example">
+                            transform: rotate(45deg);
+                            transform: rotateX(60deg);
+                            transform: rotateY(180deg);
+                            transform: rotateZ(90deg);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transform: scale</div>
+                        <div class="property-desc">Resize elements</div>
+                        <div class="property-example">
+                            transform: scale(1.2); /* 120% size */
+                            transform: scaleX(0.8); /* 80% width */
+                            transform: scaleY(1.5); /* 150% height */
+                            transform: scale(1.2, 0.8);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transform: skew</div>
+                        <div class="property-desc">Skew elements along X or Y axis</div>
+                        <div class="property-example">
+                            transform: skew(20deg);
+                            transform: skewX(15deg);
+                            transform: skewY(10deg);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Multiple Transforms</div>
+                        <div class="property-desc">Combine multiple transformations</div>
+                        <div class="property-example">
+                            transform: translateX(50px) rotate(45deg) scale(1.2);
+                            transform: translate3d(10px, 20px, 0) rotateZ(90deg);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">transform-origin</div>
+                        <div class="property-desc">Set the pivot point for transformations</div>
+                        <div class="property-example">
+                            transform-origin: center; /* default */
+                            transform-origin: top left;
+                            transform-origin: 50% 50%;
+                            transform-origin: 100% 0;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="advanced-animations">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">CSS Cubic Bezier</div>
+                        <div class="property-desc">Custom easing functions</div>
+                        <div class="property-example">
+                            /* Ease-out-back */
+                            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                            
+                            /* Ease-in-out-quart */
+                            transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Animation Delay</div>
+                        <div class="property-desc">Stagger animations for better UX</div>
+                        <div class="property-example">
+                            .item:nth-child(1) { animation-delay: 0.1s; }
+                            .item:nth-child(2) { animation-delay: 0.2s; }
+                            .item:nth-child(3) { animation-delay: 0.3s; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Performance Tips</div>
+                        <div class="property-desc">Optimize animations for 60fps</div>
+                        <div class="property-example">
+                            /* Use transform and opacity for best performance */
+                            .optimized {
+                              will-change: transform, opacity;
+                            }
+                            
+                            /* Avoid animating layout properties */
+                            /* DON'T: width, height, margin, padding */
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="responsive" class="section">
+            <div class="section-header">
+                <span class="section-icon">📱</span>
+                <div>
+                    <h2>Responsive Design</h2>
+                    <p class="section-desc">Create websites that work perfectly on all devices with modern responsive techniques.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="media-queries">Media Queries</button>
+                <button class="tab-button" data-tab="fluid-design">Fluid Design</button>
+                <button class="tab-button" data-tab="modern-units">Modern Units</button>
+                <button class="tab-button" data-tab="container-queries">Container Queries</button>
+            </div>
+
+            <div class="tab-content active" id="media-queries">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Basic Media Query</div>
+                        <div class="property-desc">Apply styles based on screen size</div>
+                        <div class="property-example">
+                            @media (max-width: 768px) {
+                              .container { padding: 1rem; }
+                            }
+                            
+                            @media (min-width: 1200px) {
+                              .container { max-width: 1140px; }
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Common Breakpoints</div>
+                        <div class="property-desc">Standard responsive breakpoints</div>
+                        <div class="property-example">
+                            /* Mobile First Approach */
+                            @media (min-width: 576px) { /* Small devices */ }
+                            @media (min-width: 768px) { /* Medium devices */ }
+                            @media (min-width: 992px) { /* Large devices */ }
+                            @media (min-width: 1200px) { /* Extra large */ }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Orientation Queries</div>
+                        <div class="property-desc">Target device orientation</div>
+                        <div class="property-example">
+                            @media (orientation: portrait) {
+                              /* Styles for portrait mode */
+                            }
+                            
+                            @media (orientation: landscape) {
+                              /* Styles for landscape mode */
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Feature Queries</div>
+                        <div class="property-desc">Test for specific device capabilities</div>
+                        <div class="property-example">
+                            @media (hover: hover) {
+                              /* Styles for devices that can hover */
+                              button:hover { background: blue; }
+                            }
+                            
+                            @media (pointer: coarse) {
+                              /* Styles for touch devices */
+                              button { min-height: 44px; }
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="fluid-design">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Flexible Images</div>
+                        <div class="property-desc">Make images responsive</div>
+                        <div class="property-example">
+                            img {
+                              max-width: 100%;
+                              height: auto;
+                            }
+                            
+                            /* Modern aspect ratio control */
+                            .image-container {
+                              aspect-ratio: 16 / 9;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Fluid Typography</div>
+                        <div class="property-desc">Typography that scales smoothly</div>
+                        <div class="property-example">
+                            h1 {
+                              font-size: clamp(2rem, 5vw, 4rem);
+                            }
+                            
+                            p {
+                              font-size: clamp(1rem, 2.5vw, 1.25rem);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Flexible Layouts</div>
+                        <div class="property-desc">Layouts that adapt to content</div>
+                        <div class="property-example">
+                            .container {
+                              width: min(90%, 1200px);
+                              margin: 0 auto;
+                            }
+                            
+                            .grid {
+                              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="modern-units">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">Viewport Units</div>
+                        <div class="property-desc">Units relative to viewport size</div>
+                        <div class="property-example">
+                            /* Viewport Width/Height */
+                            width: 100vw; /* Full viewport width */
+                            height: 100vh; /* Full viewport height */
+                            
+                            /* Minimum of vw and vh */
+                            font-size: 5vmin;
+                            
+                            /* Maximum of vw and vh */
+                            font-size: 5vmax;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">CSS Functions</div>
+                        <div class="property-desc">Mathematical functions for responsive design</div>
+                        <div class="property-example">
+                            /* Clamp: min, preferred, max */
+                            font-size: clamp(1rem, 4vw, 2rem);
+                            
+                            /* Min/Max */
+                            width: min(90%, 1200px);
+                            height: max(300px, 50vh);
+                            
+                            /* Calc */
+                            width: calc(100% - 2rem);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Logical Properties</div>
+                        <div class="property-desc">Direction-aware properties</div>
+                        <div class="property-example">
+                            /* Instead of margin-left/right */
+                            margin-inline: 1rem;
+                            
+                            /* Instead of margin-top/bottom */
+                            margin-block: 2rem;
+                            
+                            /* Instead of width */
+                            inline-size: 100%;
+                            
+                            /* Instead of height */
+                            block-size: 200px;
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="container-queries">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">@container</div>
+                        <div class="property-desc">Style based on container size (modern browsers)</div>
+                        <div class="property-example">
+                            .card-container {
+                              container-type: inline-size;
+                            }
+                            
+                            @container (min-width: 400px) {
+                              .card {
+                                display: flex;
+                                gap: 1rem;
+                              }
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Intrinsic Web Design</div>
+                        <div class="property-desc">Let content define the layout</div>
+                        <div class="property-example">
+                            .intrinsic-grid {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                              gap: 1rem;
+                            }
+                            
+                            .item {
+                              min-height: min-content;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced" class="section">
+            <div class="section-header">
+                <span class="section-icon">🚀</span>
+                <div>
+                    <h2>Advanced CSS Techniques</h2>
+                    <p class="section-desc">Master advanced CSS features like custom properties, pseudo-elements, and complex selectors.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="custom-props">Custom Properties</button>
+                <button class="tab-button" data-tab="pseudo-elements">Pseudo Elements</button>
+                <button class="tab-button" data-tab="advanced-selectors">Advanced Selectors</button>
+                <button class="tab-button" data-tab="masking-clipping">Masking & Clipping</button>
+            </div>
+
+            <div class="tab-content active" id="custom-props">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">CSS Variables</div>
+                        <div class="property-desc">Define reusable values with custom properties</div>
+                        <div class="property-example">
+                            :root {
+                              --primary-color: #007bff;
+                              --spacing-unit: 1rem;
+                              --border-radius: 8px;
+                            }
+                            
+                            .button {
+                              background: var(--primary-color);
+                              padding: var(--spacing-unit);
+                              border-radius: var(--border-radius);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Dynamic Theming</div>
+                        <div class="property-desc">Create theme systems with CSS variables</div>
+                        <div class="property-example">
+                            [data-theme="dark"] {
+                              --bg-color: #1a1a1a;
+                              --text-color: #ffffff;
+                            }
+                            
+                            [data-theme="light"] {
+                              --bg-color: #ffffff;
+                              --text-color: #333333;
+                            }
+                            
+                            body {
+                              background: var(--bg-color);
+                              color: var(--text-color);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Variable Fallbacks</div>
+                        <div class="property-desc">Provide fallback values for custom properties</div>
+                        <div class="property-example">
+                            .element {
+                              /* Fallback to blue if --primary is not defined */
+                              color: var(--primary-color, blue);
+                              
+                              /* Nested fallbacks */
+                              background: var(--bg, var(--fallback-bg, white));
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="pseudo-elements">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">::before & ::after</div>
+                        <div class="property-desc">Create decorative elements without extra HTML</div>
+                        <div class="property-example">
+                            .quote::before {
+                              content: """;
+                              font-size: 2em;
+                              color: #ccc;
+                            }
+                            
+                            .quote::after {
+                              content: """;
+                              font-size: 2em;
+                              color: #ccc;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">::first-letter</div>
+                        <div class="property-desc">Style the first letter of an element</div>
+                        <div class="property-example">
+                            .article::first-letter {
+                              font-size: 3em;
+                              float: left;
+                              line-height: 1;
+                              margin-right: 0.1em;
+                              font-weight: bold;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">::selection</div>
+                        <div class="property-desc">Style text selection</div>
+                        <div class="property-example">
+                            ::selection {
+                              background: #007bff;
+                              color: white;
+                            }
+                            
+                            .special::selection {
+                              background: #ff6b6b;
+                              color: white;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">::placeholder</div>
+                        <div class="property-desc">Style input placeholder text</div>
+                        <div class="property-example">
+                            input::placeholder {
+                              color: #999;
+                              font-style: italic;
+                              opacity: 1; /* Firefox */
+                            }
+                            
+                            input:focus::placeholder {
+                              opacity: 0.5;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="advanced-selectors">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">:nth-child() Patterns</div>
+                        <div class="property-desc">Advanced nth-child selectors</div>
+                        <div class="property-example">
+                            /* Every 3rd item */
+                            li:nth-child(3n) { background: #f0f0f0; }
+                            
+                            /* Every 3rd item starting from 2nd */
+                            li:nth-child(3n+2) { color: blue; }
+                            
+                            /* First 3 items */
+                            li:nth-child(-n+3) { font-weight: bold; }
+                            
+                            /* All except first 3 */
+                            li:nth-child(n+4) { margin-top: 1rem; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">:has() Selector</div>
+                        <div class="property-desc">Parent selector (modern browsers)</div>
+                        <div class="property-example">
+                            /* Card with an image */
+                            .card:has(img) {
+                              border: 2px solid blue;
+                            }
+                            
+                            /* Form with errors */
+                            .form:has(.error) {
+                              border-color: red;
+                            }
+                            
+                            /* Article with headings */
+                            .article:has(h2) {
+                              margin-bottom: 2rem;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">:is() & :where()</div>
+                        <div class="property-desc">Grouping selectors with different specificity</div>
+                        <div class="property-example">
+                            /* :is() maintains highest specificity */
+                            :is(h1, h2, h3) { margin-top: 0; }
+                            
+                            /* :where() has 0 specificity */
+                            :where(h1, h2, h3) { margin-bottom: 1rem; }
+                            
+                            /* Complex grouping */
+                            :is(.card, .panel) :is(h2, h3) {
+                              color: var(--heading-color);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">:not() Selector</div>
+                        <div class="property-desc">Exclude elements from selection</div>
+                        <div class="property-example">
+                            /* All buttons except primary */
+                            button:not(.primary) {
+                              background: #f8f9fa;
+                            }
+                            
+                            /* All links except external */
+                            a:not([href^="http"]) {
+                              color: var(--internal-link-color);
+                            }
+                            
+                            /* Complex exclusions */
+                            .item:not(:first-child):not(:last-child) {
+                              border-radius: 0;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="masking-clipping">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">clip-path</div>
+                        <div class="property-desc">Create custom shapes</div>
+                        <div class="property-example">
+                            /* Circle */
+                            clip-path: circle(50% at center);
+                            
+                            /* Triangle */
+                            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+                            
+                            /* Hexagon */
+                            clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+                            
+                            /* Rounded rectangle */
+                            clip-path: inset(10px 20px 30px 40px round 10px);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">mask</div>
+                        <div class="property-desc">Hide parts of elements with images or gradients</div>
+                        <div class="property-example">
+                            /* Gradient mask */
+                            mask: linear-gradient(to bottom, 
+                                    black 0%, black 70%, transparent 100%);
+                            
+                            /* Image mask */
+                            mask: url(mask.svg);
+                            
+                            /* Radial mask */
+                            mask: radial-gradient(circle, black 50%, transparent 70%);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">backdrop-filter</div>
+                        <div class="property-desc">Apply filters to background</div>
+                        <div class="property-example">
+                            .glassmorphism {
+                              background: rgba(255, 255, 255, 0.1);
+                              backdrop-filter: blur(10px);
+                              border: 1px solid rgba(255, 255, 255, 0.2);
+                            }
+                            
+                            .frosted {
+                              backdrop-filter: blur(5px) saturate(1.8);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modern" class="section">
+            <div class="section-header">
+                <span class="section-icon">⚡</span>
+                <div>
+                    <h2>Modern CSS Features</h2>
+                    <p class="section-desc">Cutting-edge CSS features and best practices for modern web development.</p>
+                </div>
+            </div>
+
+            <div class="lesson-tabs">
+                <button class="tab-button active" data-tab="subgrid">Subgrid</button>
+                <button class="tab-button" data-tab="scroll-driven">Scroll-Driven</button>
+                <button class="tab-button" data-tab="color-functions">Color Functions</button>
+                <button class="tab-button" data-tab="best-practices">Best Practices</button>
+            </div>
+
+            <div class="tab-content active" id="subgrid">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">CSS Subgrid</div>
+                        <div class="property-desc">Inherit grid tracks from parent grid</div>
+                        <div class="property-example">
+                            .grid-container {
+                              display: grid;
+                              grid-template-columns: 1fr 2fr 1fr;
+                              gap: 1rem;
+                            }
+                            
+                            .grid-item {
+                              display: grid;
+                              grid-template-rows: subgrid;
+                              grid-row: span 3;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Grid Template Areas</div>
+                        <div class="property-desc">Named grid areas for semantic layouts</div>
+                        <div class="property-example">
+                            .layout {
+                              display: grid;
+                              grid-template-areas:
+                                "header header header"
+                                "nav main aside"
+                                "footer footer footer";
+                              grid-template-rows: auto 1fr auto;
+                            }
+                            
+                            .header { grid-area: header; }
+                            .nav { grid-area: nav; }
+                            .main { grid-area: main; }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="scroll-driven">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">scroll-behavior</div>
+                        <div class="property-desc">Smooth scrolling behavior</div>
+                        <div class="property-example">
+                            html {
+                              scroll-behavior: smooth;
+                            }
+                            
+                            .scroll-container {
+                              scroll-behavior: auto; /* Override for specific container */
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">scroll-snap</div>
+                        <div class="property-desc">Create snap points for scrolling</div>
+                        <div class="property-example">
+                            .scroll-container {
+                              scroll-snap-type: x mandatory;
+                              overflow-x: scroll;
+                            }
+                            
+                            .scroll-item {
+                              scroll-snap-align: center;
+                              scroll-snap-stop: always;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">overscroll-behavior</div>
+                        <div class="property-desc">Control scroll chaining behavior</div>
+                        <div class="property-example">
+                            .modal {
+                              overscroll-behavior: contain; /* Prevent scroll chaining */
+                            }
+                            
+                            .sidebar {
+                              overscroll-behavior-y: contain;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="color-functions">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">color-mix()</div>
+                        <div class="property-desc">Mix colors mathematically (modern browsers)</div>
+                        <div class="property-example">
+                            /* Mix 50% red with 50% blue */
+                            background: color-mix(in srgb, red 50%, blue);
+                            
+                            /* Mix with different percentages */
+                            background: color-mix(in srgb, var(--primary) 80%, white);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">oklch() & oklab()</div>
+                        <div class="property-desc">Perceptually uniform color spaces</div>
+                        <div class="property-example">
+                            /* OKLCH: Lightness, Chroma, Hue */
+                            color: oklch(70% 0.25 180);
+                            
+                            /* OKLAB: Lightness, A, B */
+                            color: oklab(70% -0.3 0.4);
+                            
+                            /* Better for color manipulation */
+                            --base-color: oklch(60% 0.15 200);
+                            --lighter: oklch(80% 0.15 200);
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">accent-color</div>
+                        <div class="property-desc">Control form control accent color</div>
+                        <div class="property-example">
+                            :root {
+                              accent-color: #007bff;
+                            }
+                            
+                            /* Applies to checkboxes, radio buttons, range sliders */
+                            input[type="checkbox"] {
+                              accent-color: var(--primary-color);
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="best-practices">
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-name">CSS Architecture</div>
+                        <div class="property-desc">Organize CSS for maintainability</div>
+                        <div class="property-example">
+                            /* BEM Methodology */
+                            .card { /* Block */ }
+                            .card__title { /* Element */ }
+                            .card--featured { /* Modifier */ }
+                            
+                            /* Utility Classes */
+                            .mt-4 { margin-top: 1rem; }
+                            .text-center { text-align: center; }
+                            .sr-only { /* Screen reader only */ }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Performance Optimization</div>
+                        <div class="property-desc">CSS for better performance</div>
+                        <div class="property-example">
+                            /* Use contain for isolated components */
+                            .component {
+                              contain: layout style paint;
+                            }
+                            
+                            /* Optimize animations */
+                            .animated {
+                              will-change: transform;
+                            }
+                            
+                            /* Remove will-change after animation */
+                            .animated.complete {
+                              will-change: auto;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Accessibility First</div>
+                        <div class="property-desc">CSS for inclusive design</div>
+                        <div class="property-example">
+                            /* Respect user preferences */
+                            @media (prefers-reduced-motion: reduce) {
+                              * {
+                                animation-duration: 0.01ms !important;
+                                animation-iteration-count: 1 !important;
+                                transition-duration: 0.01ms !important;
+                              }
+                            }
+                            
+                            /* High contrast support */
+                            @media (prefers-contrast: high) {
+                              .button {
+                                border: 2px solid;
+                              }
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                    <div class="property-card">
+                        <div class="property-name">Modern Reset</div>
+                        <div class="property-desc">A modern CSS reset for better defaults</div>
+                        <div class="property-example">
+                            /* Modern CSS Reset */
+                            *, *::before, *::after {
+                              box-sizing: border-box;
+                            }
+                            
+                            * {
+                              margin: 0;
+                            }
+                            
+                            html, body {
+                              height: 100%;
+                            }
+                            
+                            body {
+                              line-height: 1.5;
+                              -webkit-font-smoothing: antialiased;
+                            }
+                            
+                            img, picture, video, canvas, svg {
+                              display: block;
+                              max-width: 100%;
+                            }
+                            <button class="copy-btn">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const sections = document.querySelectorAll('.section');
+        const propertyCards = document.querySelectorAll('.property-card');
+
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            let visibleCount = 0;
+            
+            propertyCards.forEach(card => {
+                const propertyName = card.querySelector('.property-name').textContent.toLowerCase();
+                const propertyDesc = card.querySelector('.property-desc').textContent.toLowerCase();
+                
+                if (propertyName.includes(searchTerm) || propertyDesc.includes(searchTerm) || !searchTerm) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                    
+                    // Highlight matching text
+                    if (searchTerm) {
+                        const nameEl = card.querySelector('.property-name');
+                        const descEl = card.querySelector('.property-desc');
+                        nameEl.innerHTML = highlightText(nameEl.textContent, searchTerm);
+                        descEl.innerHTML = highlightText(descEl.textContent, searchTerm);
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Update progress bar based on visible content
+            const progressPercentage = searchTerm ? (visibleCount / propertyCards.length) * 100 : 100;
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+        });
+
+        function highlightText(text, term) {
+            if (!term) return text;
+            const regex = new RegExp(`(${term})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Tab functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('tab-button')) {
+                const tabName = e.target.dataset.tab;
+                const section = e.target.closest('.section');
+                
+                // Remove active class from all tabs and content in this section
+                section.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                section.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                e.target.classList.add('active');
+                section.querySelector('#' + tabName).classList.add('active');
+            }
+        });
+
+        // Copy to clipboard functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('copy-btn')) {
+                const codeText = e.target.parentElement.textContent.replace('Copy', '').trim();
+                navigator.clipboard.writeText(codeText).then(() => {
+                    e.target.textContent = 'Copied!';
+                    setTimeout(() => {
+                        e.target.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Interactive demos
+        const flexDemo = document.getElementById('flexDemo');
+        const gridDemo = document.getElementById('gridDemo');
+
+        // Flexbox demo controls
+        document.addEventListener('click', function(e) {
+            if (e.target.dataset.prop) {
+                const property = e.target.dataset.prop;
+                const value = e.target.dataset.value;
+                
+                if (flexDemo) {
+                    flexDemo.style[property] = value;
+                }
+                
+                // Update active state
+                e.target.parentElement.querySelectorAll('.demo-control').forEach(btn => {
+                    if (btn.dataset.prop === property) {
+                        btn.classList.remove('active');
+                    }
+                });
+                e.target.classList.add('active');
+            }
+            
+            if (e.target.dataset.grid) {
+                const gridValue = e.target.dataset.grid;
+                
+                if (gridDemo) {
+                    if (gridValue === 'auto') {
+                        gridDemo.style.gridTemplateColumns = 'repeat(auto-fit, minmax(100px, 1fr))';
+                    } else {
+                        gridDemo.style.gridTemplateColumns = `repeat(${gridValue}, 1fr)`;
+                    }
+                }
+                
+                // Update active state
+                e.target.parentElement.querySelectorAll('.demo-control').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            }
+        });
+
+        // Quiz functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('quiz-option')) {
+                const isCorrect = e.target.dataset.answer === 'correct';
+                const allOptions = e.target.parentElement.querySelectorAll('.quiz-option');
+                
+                allOptions.forEach(option => {
+                    option.style.pointerEvents = 'none';
+                    if (option.dataset.answer === 'correct') {
+                        option.classList.add('correct');
+                    } else if (option === e.target && !isCorrect) {
+                        option.classList.add('incorrect');
+                    }
+                });
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Progress bar animation on scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            if (!searchBox.value) {
+                document.getElementById('progressFill').style.width = scrolled + '%';
+            }
+        });
+
+        // Initialize progress bar
+        document.getElementById('progressFill').style.width = '0%';
+    </script>
+</body>
+</html>
